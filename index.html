@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12-Week Recomposition Program · Equinox Performance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+--gold: #C8A96E;
+--gold-dim: #a07840;
+--dark: #0D0D0D;
+--card: #141414;
+--border: #222;
+--muted: #666;
+--light: #E8E8E8;
+--blue: #4A90A4;
+--red: #C0392B;
+--purple: #9B59B6;
+--green: #27AE60;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(--dark);
+color: var(--light);
+font-family: 'Crimson Pro', Georgia, serif;
+min-height: 100vh;
+font-size: 15px;
+}
+
+/* ── HEADER ── */
+.header {
+background: linear-gradient(135deg, #0D0D0D 0%, #1a1208 100%);
+border-bottom: 1px solid #C8A96E33;
+padding: 36px 24px 28px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+.header::before {
+content: '';
+position: absolute;
+inset: 0;
+background: radial-gradient(ellipse at 50% 0%, #C8A96E18 0%, transparent 65%);
+pointer-events: none;
+}
+.header-eyebrow {
+font-family: 'IBM Plex Mono', monospace;
+font-size: 10px;
+letter-spacing: 6px;
+color: var(--gold);
+margin-bottom: 10px;
+text-transform: uppercase;
+}
+.header h1 {
+font-family: 'Playfair Display', serif;
+font-size: clamp(22px, 5vw, 40px);
+font-weight: 400;
+letter-spacing: 3px;
+color: var(--light);
+margin-bottom: 6px;
+}
+.header-sub {
+font-family: 'IBM Plex Mono', monospace;
+font-size: 11px;
+color: var(--muted);
+letter-spacing: 3px;
+}
+.stats {
+display: flex;
+justify-content: center;
+gap: 32px;
+margin-top: 24px;
+flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-val {
+font-family: 'Playfair Display', serif;
+font-size: 20px;
+color: var(--gold);
+}
+.stat-label {
+font-family: 'IBM Plex Mono', monospace;
+font-size: 8px;
+letter-spacing: 2px;
+color: var(--muted);
+margin-top: 2px;
+}
+
+/* ── LAYOUT ── */
+.container { max-width: 980px; margin: 0 auto; padding: 0 16px 80px; }
+
+/* ── PHASE TABS ── */
+.phase-tabs { display: flex; gap: 8px; padding: 24px 0 14px; flex-wrap: wrap; }
+.phase-btn {
+flex: 1; min-width: 140px; padding: 14px 8px;
+background: var(--card); border: 1px solid var(--border);
+color: var(--muted); cursor: pointer; border-radius: 3px;
+font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px;
+transition: all 0.2s; text-align: center;
+}
+.phase-btn .btn-name { font-size: 12px; font-weight: 500; display: block; margin-bottom: 3px; }
+.phase-btn:hover { border-color: var(--gold); color: var(--light); }
+
+/* ── PHASE BANNER ── */
+.phase-banner {
+border-radius: 3px; padding: 16px 20px;
+margin-bottom: 14px; border-left: 3px solid;
+display: none;
+}
+.phase-banner.active { display: block; }
+.phase-banner-eye {
+font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px;
+margin-bottom: 6px;
+}
+.phase-banner p { font-size: 14px; color: #bbb; line-height: 1.65; margin-bottom: 12px; }
+.focus-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.focus-tag {
+padding: 3px 10px; border-radius: 2px;
+font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px;
+}
+
+/* ── DAY TABS ── */
+.day-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.day-btn {
+flex: 1; min-width: 88px; padding: 10px 4px;
+background: var(--card); border: 1px solid var(--border);
+color: var(--muted); cursor: pointer; border-radius: 2px;
+font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px;
+transition: all 0.15s; text-align: center;
+}
+.day-btn:hover { border-color: var(--gold); color: var(--light); }
+
+/* ── WORKOUT CARD ── */
+.workout-card {
+background: var(--card); border: 1px solid var(--border);
+border-radius: 3px; overflow: hidden;
+display: none;
+}
+.workout-card.active { display: block; animation: fadeIn 0.2s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.day-header {
+background: linear-gradient(90deg, #C8A96E22, transparent);
+border-bottom: 1px solid var(--border); padding: 16px 20px;
+}
+.day-header-eye {
+font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+letter-spacing: 3px; color: var(--gold); margin-bottom: 4px;
+}
+.day-header h2 { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400; letter-spacing: 1px; }
+
+/* ── SECTION LABELS ── */
+.section-label {
+font-family: 'IBM Plex Mono', monospace; font-size: 8px;
+letter-spacing: 3px; margin-bottom: 10px; text-transform: uppercase;
+}
+
+/* ── WARM-UP ── */
+.warmup-section { border-bottom: 1px solid var(--border); padding: 16px 20px; }
+.warmup-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.warmup-tag {
+background: #4A90A41a; border: 1px solid #4A90A433;
+color: #8bb8cc; padding: 5px 10px; border-radius: 2px; font-size: 12px;
+}
+
+/* ── EXERCISE TABLE ── */
+.exercises-section { padding: 16px 20px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead tr { border-bottom: 1px solid var(--border); }
+th {
+text-align: left; padding: 8px;
+color: var(--muted); font-family: 'IBM Plex Mono', monospace;
+font-size: 8px; letter-spacing: 2px; font-weight: 400;
+}
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:nth-child(even) { background: #ffffff05; }
+td { padding: 10px 8px; }
+td.ex-name { font-weight: 600; color: var(--light); }
+td.ex-name.sub { font-weight: 400; color: var(--muted); padding-left: 20px; }
+td.ex-sets { color: var(--gold); font-family: 'IBM Plex Mono', monospace; }
+td.ex-reps, td.ex-rest { color: #aaa; }
+td.ex-tempo { color: #aaa; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+td.ex-note { color: var(--muted); font-style: italic; font-size: 12px; }
+
+/* ── FINISHER ── */
+.finisher-section {
+margin: 0 20px 16px;
+background: #C8A96E11; border: 1px solid #C8A96E33;
+border-radius: 2px; padding: 12px 16px;
+}
+.finisher-section p { font-size: 13px; color: #ccc; }
+
+/* ── COOLDOWN ── */
+.cooldown-section { border-top: 1px solid var(--border); padding: 16px 20px; background: #ffffff03; }
+.cooldown-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.cooldown-tag {
+background: #9B59B611; border: 1px solid #9B59B633;
+color: #b899cc; padding: 5px 10px; border-radius: 2px; font-size: 12px;
+}
+
+/* ── EXPANDABLE SECTIONS ── */
+.accordion { margin-top: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 3px; }
+.accordion-header {
+width: 100%; display: flex; justify-content: space-between; align-items: center;
+padding: 14px 20px; background: transparent; border: none;
+cursor: pointer; color: var(--light);
+}
+.accordion-title { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; }
+.accordion-arrow { font-size: 12px; transition: transform 0.2s; }
+.accordion-body { display: none; padding: 0 20px 20px; }
+.accordion.open .accordion-body { display: block; animation: fadeIn 0.2s ease; }
+.accordion.open .accordion-arrow { transform: rotate(180deg); }
+
+/* ── INFO BLOCKS ── */
+.info-row {
+display: flex; gap: 12px; padding: 10px 0;
+border-bottom: 1px solid var(--border);
+}
+.info-label {
+min-width: 130px; font-family: 'IBM Plex Mono', monospace;
+font-size: 9px; letter-spacing: 1px; padding-top: 2px;
+}
+.info-val { font-size: 13px; color: #bbb; }
+
+.pillar-item { margin-bottom: 14px; padding-left: 14px; border-left: 2px solid var(--purple); }
+.pillar-name { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--purple); margin-bottom: 4px; }
+.pillar-detail { font-size: 13px; color: #bbb; }
+
+.cardio-card {
+margin-bottom: 14px; padding: 12px; background: #ffffff05;
+border-radius: 2px; border: 1px solid var(--border);
+}
+.cardio-type { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 3px; }
+.cardio-timing { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555; margin-bottom: 6px; }
+.cardio-detail { font-size: 13px; color: #aaa; }
+
+.deload-list { list-style: none; padding: 0; }
+.deload-list li {
+padding: 7px 0; border-bottom: 1px solid var(--border);
+color: #bbb; font-size: 13px; display: flex; align-items: center; gap: 10px;
+}
+.deload-list li::before { content: '▸'; color: var(--red); font-size: 10px; }
+
+.prog-item { margin-bottom: 14px; padding-left: 14px; border-left: 2px solid var(--gold); }
+.prog-phase { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-bottom: 4px; }
+.prog-method { font-size: 13px; color: #bbb; }
+
+.alert-box {
+margin-top: 14px; padding: 12px; border-radius: 2px;
+font-size: 12px;
+}
+
+/* ── FOOTER ── */
+.footer {
+margin-top: 32px; text-align: center; padding: 20px;
+border-top: 1px solid var(--border);
+font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+color: var(--muted); letter-spacing: 2px;
+line-height: 1.8;
+}
+.footer span { color: var(--gold); }
+</style>
+
+</head>
+<body>
+
+<div class="header">
+<div class="header-eyebrow">Equinox Performance Training</div>
+<h1>12-Week Body Recomposition</h1>
+<div class="header-sub">Advanced · 5 Days/Week · Fat Loss + Muscle · Longevity</div>
+<div class="stats">
+<div class="stat-item"><div class="stat-val">36</div><div class="stat-label">Age</div></div>
+<div class="stat-item"><div class="stat-val">190 lbs</div><div class="stat-label">Current Weight</div></div>
+<div class="stat-item"><div class="stat-val">15–20%</div><div class="stat-label">Current BF%</div></div>
+<div class="stat-item"><div class="stat-val">7–10%</div><div class="stat-label">Target BF%</div></div>
+<div class="stat-item"><div class="stat-val">Advanced</div><div class="stat-label">Level</div></div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- PHASE TABS -->
+<div class="phase-tabs">
+<button class="phase-btn" onclick="setPhase(0)" id="ptab-0" style="border-color:#4A90A4;color:#4A90A4;">
+<span class="btn-name">FOUNDATION</span>Weeks 1–4
+</button>
+<button class="phase-btn" onclick="setPhase(1)" id="ptab-1">
+<span class="btn-name">BUILDING</span>Weeks 5–8
+</button>
+<button class="phase-btn" onclick="setPhase(2)" id="ptab-2">
+<span class="btn-name">PEAK</span>Weeks 9–12
+</button>
+</div>
+
+<!-- PHASE BANNERS -->
+<div class="phase-banner active" id="pbanner-0" style="background:#4A90A411;border-color:#4A90A4;">
+<div class="phase-banner-eye" style="color:#4A90A4;">PHASE 1 · METABOLIC RESET & MOVEMENT QUALITY</div>
+<p>Establish movement patterns, prime the nervous system, and ignite fat loss. Higher volume, moderate intensity. Introducing mobility as a cornerstone — not an afterthought.</p>
+<div class="focus-tags">
+<span class="focus-tag" style="background:#4A90A422;border:1px solid #4A90A444;color:#4A90A4;">Form Mastery</span>
+<span class="focus-tag" style="background:#4A90A422;border:1px solid #4A90A444;color:#4A90A4;">Aerobic Base</span>
+<span class="focus-tag" style="background:#4A90A422;border:1px solid #4A90A444;color:#4A90A4;">Mobility Foundation</span>
+<span class="focus-tag" style="background:#4A90A422;border:1px solid #4A90A444;color:#4A90A4;">Metabolic Conditioning</span>
+</div>
+</div>
+<div class="phase-banner" id="pbanner-1" style="background:#C8A96E11;border-color:#C8A96E;">
+<div class="phase-banner-eye" style="color:#C8A96E;">PHASE 2 · HYPERTROPHY DRIVE & METABOLIC INTENSIFICATION</div>
+<p>Escalate volume and intensity. Progressive overload becomes systematic. Cardio shifts to strategic fat-burning windows. Mobility work deepens. This is where the physique change becomes visible.</p>
+<div class="focus-tags">
+<span class="focus-tag" style="background:#C8A96E22;border:1px solid #C8A96E44;color:#C8A96E;">Hypertrophy Volume</span>
+<span class="focus-tag" style="background:#C8A96E22;border:1px solid #C8A96E44;color:#C8A96E;">Advanced Techniques</span>
+<span class="focus-tag" style="background:#C8A96E22;border:1px solid #C8A96E44;color:#C8A96E;">Strategic Cardio</span>
+<span class="focus-tag" style="background:#C8A96E22;border:1px solid #C8A96E44;color:#C8A96E;">Strength Progression</span>
+</div>
+</div>
+<div class="phase-banner" id="pbanner-2" style="background:#C0392B11;border-color:#C0392B;">
+<div class="phase-banner-eye" style="color:#C0392B;">PHASE 3 · INTENSIFICATION, LEANNESS & PERFORMANCE</div>
+<p>Maximum fat loss with preserved muscle. High-intensity methods (giant sets, rest-pause, contrast training). Cardio is strategic and targeted. Culminates in a deload for full supercompensation.</p>
+<div class="focus-tags">
+<span class="focus-tag" style="background:#C0392B22;border:1px solid #C0392B44;color:#C0392B;">Peak Intensity</span>
+<span class="focus-tag" style="background:#C0392B22;border:1px solid #C0392B44;color:#C0392B;">Fat Loss Maximization</span>
+<span class="focus-tag" style="background:#C0392B22;border:1px solid #C0392B44;color:#C0392B;">Strength Testing</span>
+<span class="focus-tag" style="background:#C0392B22;border:1px solid #C0392B44;color:#C0392B;">Recovery Mastery</span>
+</div>
+</div>
+
+<!-- DAY TABS -->
+<div class="day-tabs" id="day-tabs"></div>
+
+<!-- WORKOUT CARDS -->
+<div id="workout-cards"></div>
+
+<!-- EXPANDABLE SECTIONS -->
+<div class="accordion" id="acc-prog">
+<button class="accordion-header" onclick="toggleAcc('acc-prog')">
+<span class="accordion-title" style="color:#4A90A4;">PROGRESSIVE OVERLOAD PLAN</span>
+<span class="accordion-arrow" style="color:#4A90A4;">▼</span>
+</button>
+<div class="accordion-body">
+<div class="prog-item"><div class="prog-phase">PHASE 1 (WEEKS 1–4)</div><div class="prog-method">Add 2.5–5 lbs to compound lifts each week. Add 1 rep to accessory movements. Maintain form strictly — do not sacrifice technique for weight.</div></div>
+<div class="prog-item"><div class="prog-phase">PHASE 2 (WEEKS 5–8)</div><div class="prog-method">Wave loading: Week 5 moderate, Week 6 heavier, Week 7 heaviest, Week 8 back-off. Add drop sets and supersets to increase total volume without extra time.</div></div>
+<div class="prog-item"><div class="prog-phase">PHASE 3 (WEEKS 9–12)</div><div class="prog-method">Max effort weeks 9–11. Week 12: PR attempts on squat, deadlift, weighted pull-up, and benchmark WOD. Log all numbers — these become your Phase 2 baseline next cycle.</div></div>
+</div>
+</div>
+
+<div class="accordion" id="acc-cardio">
+<button class="accordion-header" onclick="toggleAcc('acc-cardio')">
+<span class="accordion-title" style="color:#C8A96E;">CARDIO INTEGRATION PROTOCOL</span>
+<span class="accordion-arrow" style="color:#C8A96E;">▼</span>
+</button>
+<div class="accordion-body">
+<div class="cardio-card"><div class="cardio-type">Zone 2 Cardio</div><div class="cardio-timing">3× per week · 30–45 min · Fasted (morning preferred)</div><div class="cardio-detail">Assault bike or row erg at 60–65% max HR. Primary fat oxidation tool. Never perform directly after heavy lifting — keep a 4+ hour gap or do it in the AM before evening training.</div></div>
+<div class="cardio-card"><div class="cardio-type">HIIT / Metabolic Finishers</div><div class="cardio-timing">Embedded in 3 lifting days · 10–20 min post-lift</div><div class="cardio-detail">Keeps heart rate elevated post-training; amplifies EPOC for 24–36 hours. Finishers are already written into each workout day. Do not skip them — this is where fat comes off.</div></div>
+<div class="cardio-card"><div class="cardio-type">LISS Recovery Walk</div><div class="cardio-timing">Saturday or Sunday · 30–60 min</div><div class="cardio-detail">Brisk outdoor walk. Enhances mitochondrial density, improves recovery, burns additional calories without cortisol spike. Non-negotiable for longevity goals.</div></div>
+</div>
+</div>
+
+<div class="accordion" id="acc-deload">
+<button class="accordion-header" onclick="toggleAcc('acc-deload')">
+<span class="accordion-title" style="color:#C0392B;">DELOAD PROTOCOL</span>
+<span class="accordion-arrow" style="color:#C0392B;">▼</span>
+</button>
+<div class="accordion-body">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#C0392B;margin-bottom:14px;">TIMING: End of Week 4 and End of Week 8</div>
+<ul class="deload-list">
+<li>Reduce all working sets by 40–50% of normal load</li>
+<li>Keep same exercises and movement patterns — do not change the program</li>
+<li>Reduce intensity to RPE 5–6 (never grinding or hitting failure)</li>
+<li>Prioritize mobility: add 20–30 min extra each deload session</li>
+<li>Sleep 8–9 hours; optimize nutrition — this is when supercompensation occurs</li>
+<li>Active recovery: daily 30 min Zone 2 walk</li>
+</ul>
+</div>
+</div>
+
+<div class="accordion" id="acc-nutrition">
+<button class="accordion-header" onclick="toggleAcc('acc-nutrition')">
+<span class="accordion-title" style="color:#27AE60;">NUTRITION FRAMEWORK (RECOMPOSITION)</span>
+<span class="accordion-arrow" style="color:#27AE60;">▼</span>
+</button>
+<div class="accordion-body">
+<div class="info-row"><div class="info-label" style="color:#27AE60;">CALORIC TARGET</div><div class="info-val">~2,400–2,700 kcal/day (slight deficit for recomp)</div></div>
+<div class="info-row"><div class="info-label" style="color:#27AE60;">PROTEIN</div><div class="info-val">220–240g/day (1.2g × bodyweight in lbs)</div></div>
+<div class="info-row"><div class="info-label" style="color:#27AE60;">CARB CYCLING</div><div class="info-val">Training days ~250g · Rest/cardio days ~150g</div></div>
+<div class="info-row"><div class="info-label" style="color:#27AE60;">DIETARY FATS</div><div class="info-val">70–90g/day · Prioritize omega-3s and monounsaturated fats</div></div>
+<div class="info-row"><div class="info-label" style="color:#27AE60;">MEAL TIMING</div><div class="info-val">Pre-workout: carbs + protein 60–90 min before · Post-workout: fast protein within 30 min</div></div>
+<div class="alert-box" style="background:#27AE6011;border:1px solid #27AE6033;color:#7ecc9a;">
+⚠ Recomposition requires a slight caloric deficit combined with high protein. At 190 lbs and advanced training level, target 0.5–1 lb of weight loss per week while maintaining or slightly increasing lean muscle. Track weekly average weight — not daily fluctuations.
+</div>
+</div>
+</div>
+
+<div class="accordion" id="acc-longevity">
+<button class="accordion-header" onclick="toggleAcc('acc-longevity')">
+<span class="accordion-title" style="color:#9B59B6;">LONGEVITY & RECOVERY PILLARS</span>
+<span class="accordion-arrow" style="color:#9B59B6;">▼</span>
+</button>
+<div class="accordion-body">
+<div class="pillar-item"><div class="pillar-name">SLEEP</div><div class="pillar-detail">8–9 hours non-negotiable. Growth hormone peaks in deep sleep. This is when muscle is built and fat is mobilized. Compromise sleep, compromise the entire program.</div></div>
+<div class="pillar-item"><div class="pillar-name">DAILY MOBILITY MINIMUM</div><div class="pillar-detail">10 min every morning: hip 90/90, thoracic rotation, ankle circles, shoulder CARs. Do this before coffee, not as an afterthought.</div></div>
+<div class="pillar-item"><div class="pillar-name">SOFT TISSUE WORK</div><div class="pillar-detail">Foam roll 10 min, 3× per week minimum. Lacrosse ball for upper traps, glutes, pec minor. Reduces injury risk and accelerates recovery significantly.</div></div>
+<div class="pillar-item"><div class="pillar-name">SAUNA / COLD PROTOCOL</div><div class="pillar-detail">If available: 15–20 min sauna post-training 2–3× per week. Cold shower or plunge 2 min after. Reduces inflammation, accelerates recovery, improves sleep quality.</div></div>
+<div class="pillar-item"><div class="pillar-name">NORDIC CURLS + TURKISH GET-UPS</div><div class="pillar-detail">These two movements are non-negotiable for longevity. Nordic = bulletproof hamstrings against tears. TGU = total body coordination, shoulder stability, and hip mobility in one movement.</div></div>
+<div class="pillar-item"><div class="pillar-name">HEART RATE MONITORING</div><div class="pillar-detail">Use a HR monitor during conditioning. Zone 2 (60–65% max HR) for fat burning and recovery. Never let conditioning drift to Zone 4–5 unless it's intentional HIIT. Know the difference.</div></div>
+</div>
+</div>
+
+<div class="footer">
+Equinox Performance · Custom Program · 36M · Advanced · Recomposition<br>
+<span>Track weekly. Trust the process. Results compound.</span>
+</div>
+
+</div>
+
+<script>
+const data = {
+phases: [
+{
+days: [
+{
+day: "Monday", label: "PUSH — Chest / Shoulders / Triceps",
+warmup: ["5 min assault bike (Zone 2)","Band pull-aparts 2×15","Shoulder CARs 2×5 each","Incline T-spine rotation 10/side","Wall slides 2×10"],
+exercises: [
+{name:"Barbell Bench Press",sets:"4",reps:"8–10",rest:"90s",tempo:"3-1-1-0",note:"Control eccentric; pause 1s at chest"},
+{name:"Dumbbell Incline Press",sets:"3",reps:"10–12",rest:"75s",tempo:"3-0-1-0",note:"30° incline, neutral grip"},
+{name:"Cable Lateral Raise",sets:"3",reps:"15–20",rest:"60s",tempo:"2-0-1-1",note:"Unilateral; lean slightly away from cable"},
+{name:"Seated DB Overhead Press",sets:"3",reps:"10–12",rest:"75s",tempo:"3-0-1-0",note:"Strict; no leg drive"},
+{name:"Cable Tricep Pushdown (rope)",sets:"3",reps:"12–15",rest:"60s",tempo:"2-0-1-1",note:"Flare elbows at bottom"},
+{name:"Overhead Tricep Extension (cable)",sets:"3",reps:"12–15",rest:"60s",tempo:"3-0-1-0",note:"Full stretch at top"},
+],
+finisher:"3 rounds: 10 push-ups + 15 band face pulls (no rest between exercises, 60s between rounds)",
+cooldown:["Doorframe chest stretch 60s","Cross-body shoulder stretch 45s/side","Tricep overhead stretch 30s/side","Child's pose with reach 60s"]
+},
+{
+day: "Tuesday", label: "PULL — Back / Biceps / Rear Delts",
+warmup: ["5 min row erg (easy pace)","Cat-cow 10 reps","Dead hang 3×20s","Band pull-aparts 2×15","Scapular wall slides 2×10"],
+exercises: [
+{name:"Weighted Pull-Up",sets:"4",reps:"6–8",rest:"90s",tempo:"3-1-1-0",note:"Full ROM; dead hang to chin over bar"},
+{name:"Barbell Bent-Over Row",sets:"4",reps:"8–10",rest:"90s",tempo:"3-0-1-1",note:"45° torso; pull to lower sternum"},
+{name:"Seated Cable Row (wide grip)",sets:"3",reps:"10–12",rest:"75s",tempo:"3-0-1-1",note:"Retract scapula; do not shrug"},
+{name:"Single-Arm DB Row",sets:"3",reps:"10–12 each",rest:"60s",tempo:"3-0-1-0",note:"Brace on bench; full stretch at bottom"},
+{name:"Face Pull (rope)",sets:"3",reps:"15–20",rest:"60s",tempo:"2-1-1-1",note:"External rotate at peak contraction"},
+{name:"EZ Bar Curl",sets:"3",reps:"10–12",rest:"60s",tempo:"3-0-1-1",note:"Strict; no swinging"},
+{name:"Incline DB Curl",sets:"2",reps:"12–15",rest:"60s",tempo:"3-0-1-0",note:"Full stretch; long head emphasis"},
+],
+finisher:"2 rounds: 20 band pull-aparts + 10 scapular push-ups (no rest between, 60s between rounds)",
+cooldown:["Lat stretch (bar or doorframe) 60s","Posterior shoulder stretch 45s/side","Bicep wall stretch 45s/side","Thread-the-needle 30s/side"]
+},
+{
+day: "Wednesday", label: "LEGS — Quad / Glute Focus",
+warmup: ["5 min bike (moderate)","Hip 90/90 stretch 60s each side","Glute bridge activation 2×15","Banded clamshells 2×15/side","Leg swings (fwd/lateral) 10 each","Goblet squat 2×10 (light)"],
+exercises: [
+{name:"Back Squat",sets:"4",reps:"8–10",rest:"2 min",tempo:"3-1-1-0",note:"Pause 1s in hole; drive knees out"},
+{name:"Romanian Deadlift",sets:"4",reps:"10–12",rest:"90s",tempo:"3-0-1-0",note:"Hip hinge; neutral spine; feel hamstring stretch"},
+{name:"Bulgarian Split Squat (DB)",sets:"3",reps:"10–12 each",rest:"75s",tempo:"3-0-1-0",note:"Front foot far enough to keep shin vertical"},
+{name:"Leg Press",sets:"3",reps:"12–15",rest:"75s",tempo:"3-0-1-0",note:"High foot placement; full ROM"},
+{name:"Walking DB Lunge",sets:"3",reps:"12 each",rest:"60s",tempo:"2-0-1-0",note:"Upright torso; full step length"},
+{name:"Leg Curl (lying)",sets:"3",reps:"12–15",rest:"60s",tempo:"3-0-1-1",note:"Plantarflex foot at peak contraction"},
+{name:"Standing Calf Raise",sets:"4",reps:"15–20",rest:"60s",tempo:"2-2-1-2",note:"Full ROM; pause at top and bottom"},
+],
+finisher:"100 banded glute bridges for time — take breaks as needed, log total time",
+cooldown:["Pigeon pose 90s/side","Couch stretch 60s/side","Standing quad stretch 45s/side","Seated hamstring stretch 60s/side","Calf stretch on step 30s/side"]
+},
+{
+day: "Thursday", label: "CONDITIONING + CORE",
+warmup: ["3 min jump rope (easy)","World's greatest stretch 5/side","Dead bug 2×8 each arm","Hollow body hold 2×20s"],
+exercises: [
+{name:"Kettlebell Turkish Get-Up",sets:"3",reps:"3 each side",rest:"90s",tempo:"Controlled",note:"Longevity cornerstone; focus on each transition"},
+{name:"Ab Wheel Rollout",sets:"3",reps:"8–12",rest:"60s",tempo:"3-0-1-0",note:"From knees; keep low back neutral"},
+{name:"Hanging Leg Raise",sets:"3",reps:"10–15",rest:"60s",tempo:"2-1-1-0",note:"Control; no swinging; posterior pelvic tilt at top"},
+{name:"Pallof Press",sets:"3",reps:"12 each side",rest:"45s",tempo:"2-2-2-0",note:"Anti-rotation; stand tall"},
+{name:"Suitcase Carry",sets:"3",reps:"40m each side",rest:"60s",tempo:"Controlled walk",note:"Challenging weight; core braced throughout"},
+],
+finisher:"EMOM 12 min: Min 1 — 10 cal assault bike | Min 2 — 10 box jumps | Min 3 — 10 KB swings (heavy)",
+cooldown:["90/90 hip stretch 60s/side","Spinal rotation (lying) 30s/side","Child's pose 90s","Diaphragmatic breathing 2 min"]
+},
+{
+day: "Friday", label: "FULL BODY — Power & Athleticism",
+warmup: ["5 min light row or ski erg","Jumping jacks 30s","Arm circles fwd/back 10 each","Hip circles 10 each direction","Inchworm to push-up 5 reps","Air squat + reach 10 reps"],
+exercises: [
+{name:"Power Clean (from floor)",sets:"5",reps:"3",rest:"2 min",tempo:"Explosive",note:"Focus on triple extension; reset each rep"},
+{name:"Trap Bar Deadlift",sets:"4",reps:"6–8",rest:"2 min",tempo:"2-0-1-0",note:"Drive floor away; squeeze glutes at top"},
+{name:"Pull-Up (bodyweight)",sets:"3",reps:"Max reps",rest:"90s",tempo:"2-1-1-0",note:"Stop 1–2 reps shy of failure"},
+{name:"Dips (weighted)",sets:"3",reps:"8–10",rest:"90s",tempo:"3-0-1-0",note:"Slight forward lean for chest emphasis"},
+{name:"DB Farmer's Carry",sets:"3",reps:"50m",rest:"90s",tempo:"Brisk walk",note:"Heavy DBs; shoulder packed; stand tall"},
+{name:"Box Jump",sets:"3",reps:"5",rest:"60s",tempo:"Explosive",note:"Full hip extension at top; always step down"},
+],
+finisher:"For time: 400m run + 21 KB swings + 12 pull-ups + 400m run + 15 KB swings + 9 pull-ups",
+cooldown:["Full body foam roll 10 min (calves, hamstrings, quads, IT band, upper back, lats)","Hip flexor stretch 60s/side","Doorframe chest stretch 60s","Neck release 30s/side"]
+}
+]
+},
+{
+days: [
+{
+day: "Monday", label: "PUSH — Volume Block (Giant Sets)",
+warmup: ["5 min bike","Band pull-aparts 3×15","Shoulder pass-throughs 2×10","Pike push-ups 2×10"],
+exercises: [
+{name:"Barbell Bench Press",sets:"5",reps:"6–8",rest:"2 min",tempo:"3-1-1-0",note:"+2.5–5 lbs vs Phase 1"},
+{name:"DB Incline Press",sets:"4",reps:"10–12",rest:"75s",tempo:"3-0-1-0",note:"Add drop set on final set"},
+{name:"Machine Chest Fly",sets:"3",reps:"12–15",rest:"60s",tempo:"3-0-1-1",note:"Full stretch; squeeze at peak"},
+{name:"Arnold Press",sets:"4",reps:"10–12",rest:"75s",tempo:"3-0-1-0",note:"Full ROM rotation"},
+{name:"Cable Lateral Raise ↔ Face Pull (superset)",sets:"4",reps:"15–20 / 15",rest:"45s",tempo:"2-0-1-1",note:"No rest between paired exercises"},
+{name:"Skull Crusher (EZ bar)",sets:"3",reps:"10–12",rest:"75s",tempo:"3-0-1-0",note:""},
+{name:"Cable Pushdown ↔ Overhead Extension (superset)",sets:"3",reps:"15 / 15",rest:"45s",tempo:"2-0-1-1",note:""},
+],
+finisher:"Push-up to failure — 2 sets, 90s rest between",
+cooldown:["Chest doorframe stretch 60s","Shoulder sleeper stretch 60s/side","Tricep overhead stretch 45s/side","Thoracic foam roll 90s"]
+},
+{
+day: "Tuesday", label: "PULL — Volume Block",
+warmup: ["5 min row","Dead hang 3×25s","Band pull-aparts 3×15","Scap push-ups 2×10"],
+exercises: [
+{name:"Weighted Pull-Up",sets:"5",reps:"5–7",rest:"2 min",tempo:"3-1-1-0",note:"+2.5–5 lbs vs Phase 1"},
+{name:"Chest Supported DB Row",sets:"4",reps:"10–12",rest:"75s",tempo:"3-0-1-1",note:"Removes lower back fatigue; isolates lats"},
+{name:"Wide-Grip Lat Pulldown",sets:"3",reps:"10–12",rest:"75s",tempo:"3-0-1-1",note:""},
+{name:"Seated Cable Row (narrow grip)",sets:"3",reps:"12–15",rest:"60s",tempo:"3-0-1-1",note:""},
+{name:"Straight-Arm Pulldown ↔ Reverse Fly (superset)",sets:"3",reps:"15 / 15–20",rest:"45s",tempo:"2-0-1-1",note:""},
+{name:"Hammer Curl (alternating)",sets:"3",reps:"12 each",rest:"60s",tempo:"3-0-1-0",note:""},
+{name:"Cable Concentration Curl",sets:"3",reps:"12–15",rest:"45s",tempo:"3-0-1-1",note:""},
+],
+finisher:"3 min AMRAP: max pull-ups (kipping allowed)",
+cooldown:["Lat overhead stretch 60s","Posterior capsule stretch 60s/side","Thoracic foam roll 90s","Child's pose with lat reach 60s each side"]
+},
+{
+day: "Wednesday", label: "LEGS — Posterior Chain Focus",
+warmup: ["5 min assault bike","Hip 90/90 mobility 90s/side","Banded monster walks 2×15","RDL with PVC 2×10","Glute activation bridge 2×20"],
+exercises: [
+{name:"Conventional Deadlift",sets:"5",reps:"5",rest:"2.5 min",tempo:"3-0-1-0",note:"Working up to RPE 8.5"},
+{name:"Front Squat",sets:"4",reps:"6–8",rest:"2 min",tempo:"3-1-1-0",note:"Wrist mobility critical; high elbows"},
+{name:"Romanian Deadlift",sets:"4",reps:"10–12",rest:"90s",tempo:"4-0-1-0",note:"Slow eccentric; max hamstring stretch"},
+{name:"Hip Thrust (barbell)",sets:"4",reps:"12–15",rest:"75s",tempo:"2-2-1-0",note:"Pause 2s at top; posterior pelvic tilt"},
+{name:"Nordic Curl",sets:"3",reps:"5–8",rest:"90s",tempo:"Controlled",note:"Longevity staple; eccentric hamstring strength"},
+{name:"Leg Press (narrow, high foot)",sets:"3",reps:"15–20",rest:"60s",tempo:"3-0-1-0",note:""},
+{name:"Seated Calf Raise",sets:"4",reps:"15–20",rest:"60s",tempo:"2-2-1-2",note:""},
+],
+finisher:"3 sets × 20 KB goblet squat jumps (moderate weight) — 90s rest between sets",
+cooldown:["Pigeon pose 90s/side","Half-kneeling hip flexor stretch 60s/side","Lying hamstring stretch 60s/side","Calf stretch on step 45s/side","Glute foam roll 60s/side"]
+},
+{
+day: "Thursday", label: "CONDITIONING + CORE + MOBILITY",
+warmup: ["5 min easy bike","World's greatest stretch 5/side","Hollow body + arch rocks 10 each"],
+exercises: [
+{name:"Turkish Get-Up (heavier)",sets:"4",reps:"3 each side",rest:"90s",tempo:"Controlled",note:"+weight vs Phase 1"},
+{name:"Dragon Flag (or L-sit)",sets:"3",reps:"5–8",rest:"60s",tempo:"Controlled",note:""},
+{name:"Cable Wood Chop (high-to-low + low-to-high)",sets:"3",reps:"12 each",rest:"60s",tempo:"2-0-2-0",note:""},
+{name:"Copenhagen Plank",sets:"3",reps:"20s each side",rest:"45s",tempo:"Isometric",note:"Adductor strength = injury prevention"},
+{name:"Dead Bug (weighted)",sets:"3",reps:"8 each side",rest:"45s",tempo:"Controlled",note:"Hold KB or plate above chest"},
+],
+finisher:"EMOM 15 min: Min 1 — 12 cal assault bike | Min 2 — 15 wall balls | Min 3 — 10 burpee box jump-overs",
+cooldown:["Extended mobility session (15 min)","Couch stretch 90s/side","Half-kneeling thoracic rotation 10/side","Lizard pose 60s/side","Seated twist 30s/side","Supine hip capsule stretch 60s/side"]
+},
+{
+day: "Friday", label: "FULL BODY — Strength & Power",
+warmup: ["5 min row","Jump rope 1 min","Hip circles 10/side","Arm swings 10/direction","Inchworm 5 reps"],
+exercises: [
+{name:"Snatch-Grip High Pull",sets:"5",reps:"3",rest:"2 min",tempo:"Explosive",note:"Power development; use straps"},
+{name:"Safety Bar Squat",sets:"4",reps:"6",rest:"2.5 min",tempo:"3-1-1-0",note:"Reduces spinal load; great for longevity"},
+{name:"Single-Arm DB Press",sets:"3",reps:"8 each",rest:"90s",tempo:"3-0-1-0",note:"Core stabilization element"},
+{name:"Chest-to-Bar Pull-Up",sets:"3",reps:"6–8",rest:"90s",tempo:"2-1-1-0",note:""},
+{name:"Sled Push (heavy)",sets:"4",reps:"20m",rest:"90s",tempo:"Hard push",note:"Low back friendly; quad destroyer"},
+{name:"Plyo Push-Up",sets:"3",reps:"6–8",rest:"60s",tempo:"Explosive",note:"Full airtime; land soft"},
+],
+finisher:"For time: 500m row + 30 wall balls + 20 pull-ups + 10 hang power cleans (moderate weight)",
+cooldown:["Full foam roll + 20 min mobility: full body, focus on anything tight","Hip flexor stretch 90s/side","Overhead lat stretch 60s/side","Spinal decompression hang 60s"]
+}
+]
+},
+{
+days: [
+{
+day: "Monday", label: "PUSH — Intensification (Giant Sets)",
+warmup: ["5 min bike","Band work 3×15","Shoulder prep sequence 5 min"],
+exercises: [
+{name:"GIANT SET A — 4 rounds (90s rest after each round):",sets:"",reps:"",rest:"",tempo:"",note:""},
+{name:"→ Barbell Bench Press",sets:"4",reps:"6 (heavy)",rest:"—",tempo:"3-1-1-0",note:""},
+{name:"→ DB Incline Fly",sets:"4",reps:"12",rest:"—",tempo:"3-0-1-1",note:""},
+{name:"→ Cable Lateral Raise",sets:"4",reps:"15 each",rest:"—",tempo:"2-0-1-1",note:""},
+{name:"→ Push-Up to failure",sets:"4",reps:"Max",rest:"90s",tempo:"Controlled",note:""},
+{name:"GIANT SET B — 3 rounds (90s rest after each round):",sets:"",reps:"",rest:"",tempo:"",note:""},
+{name:"→ Arnold Press",sets:"3",reps:"10",rest:"—",tempo:"3-0-1-0",note:""},
+{name:"→ Skull Crusher",sets:"3",reps:"12",rest:"—",tempo:"3-0-1-0",note:""},
+{name:"→ Tricep Pushdown",sets:"3",reps:"15",rest:"90s",tempo:"2-0-1-1",note:""},
+],
+finisher:"Rest-Pause Bench: 1 set × 10 reps → rest 20s → max reps → rest 20s → max reps",
+cooldown:["Complete mobility routine 10 min: chest, shoulders, thoracic spine"]
+},
+{
+day: "Tuesday", label: "PULL — Intensification",
+warmup: ["5 min row","Dead hang 3×30s","Band work 2×15"],
+exercises: [
+{name:"CONTRAST PAIRING A — 4 rounds (2 min rest):",sets:"",reps:"",rest:"",tempo:"",note:""},
+{name:"→ Weighted Pull-Up (heavy)",sets:"4",reps:"4–5",rest:"—",tempo:"2-1-1-0",note:""},
+{name:"→ Band-Assisted Pull-Up (explosive)",sets:"4",reps:"8",rest:"2 min",tempo:"Explosive",note:""},
+{name:"GIANT SET B — 3 rounds:",sets:"",reps:"",rest:"",tempo:"",note:""},
+{name:"→ Bent-Over Row (heavy)",sets:"3",reps:"6",rest:"—",tempo:"3-0-1-1",note:""},
+{name:"→ Cable Row (mid-weight)",sets:"3",reps:"12",rest:"—",tempo:"3-0-1-1",note:""},
+{name:"→ Straight-Arm Pulldown",sets:"3",reps:"15",rest:"90s",tempo:"2-0-1-1",note:""},
+{name:"BICEP GIANT SET — 3 rounds:",sets:"",reps:"",rest:"",tempo:"",note:""},
+{name:"→ EZ Bar Curl",sets:"3",reps:"8",rest:"—",tempo:"3-0-1-0",note:""},
+{name:"→ DB Hammer Curl",sets:"3",reps:"12",rest:"—",tempo:"2-0-1-0",note:""},
+{name:"→ Cable Reverse Curl",sets:"3",reps:"15",rest:"60s",tempo:"2-0-1-1",note:""},
+],
+finisher:"2 min max pull-ups (any style) — log total reps",
+cooldown:["Lat stretch, posterior capsule, thoracic rotation — 10 min total"]
+},
+{
+day: "Wednesday", label: "LEGS — Peak Intensity + PR Attempts",
+warmup: ["5 min bike","Hip mobility protocol 5 min","Glute activation 2×20"],
+exercises: [
+{name:"Back Squat — Heavy Single",sets:"1",reps:"1RM (RPE 9)",rest:"5 min",tempo:"Controlled",note:"Week 12 PR attempt — log the number"},
+{name:"Back Squat — Back-Off Volume",sets:"3",reps:"8 @ 75% of 1RM",rest:"2 min",tempo:"3-1-1-0",note:""},
+{name:"Deadlift — Heavy Single",sets:"1",reps:"1RM (RPE 9)",rest:"5 min",tempo:"Controlled",note:"Week 12 PR attempt — log the number"},
+{name:"Deadlift — Back-Off",sets:"3",reps:"6 @ 75%",rest:"2 min",tempo:"2-0-1-0",note:""},
+{name:"Bulgarian Split Squat (heavy)",sets:"3",reps:"8 each",rest:"90s",tempo:"3-0-1-0",note:""},
+{name:"Nordic Curl",sets:"3",reps:"8",rest:"90s",tempo:"Controlled",note:""},
+{name:"Standing Calf Raise",sets:"4",reps:"20",rest:"60s",tempo:"2-2-1-2",note:""},
+],
+finisher:"6 rounds Tabata: 20s air squat jumps / 10s rest",
+cooldown:["Extended lower body mobility 15 min: pigeon, couch stretch, hamstring, calf"]
+},
+{
+day: "Thursday", label: "CONDITIONING + DEEP MOBILITY",
+warmup: ["5 min easy movement","Box breathing 5 min (4s in / 4s hold / 4s out / 4s hold)"],
+exercises: [
+{name:"Turkish Get-Up (heavy — PR attempt)",sets:"5",reps:"2 each side",rest:"2 min",tempo:"Controlled",note:"New weight PR attempt"},
+{name:"CORE CIRCUIT — 4 rounds:",sets:"",reps:"",rest:"",tempo:"",note:""},
+{name:"→ Ab Wheel Rollout",sets:"4",reps:"12",rest:"—",tempo:"3-0-1-0",note:""},
+{name:"→ Hanging Windshield Wiper",sets:"4",reps:"8 each side",rest:"—",tempo:"Controlled",note:""},
+{name:"→ Pallof Press",sets:"4",reps:"12 each",rest:"60s",tempo:"2-2-2-0",note:""},
+],
+finisher:"EMOM 20 min: Min 1—15 cal row | Min 2—10 burpee pull-ups | Min 3—20 KB swings | Min 4—active rest",
+cooldown:["20-MINUTE LONGEVITY SESSION:","Supported squat hold 2 min","Half-kneeling hip stretch 90s/side","Thoracic extension on foam roller 90s","Ankle CARs 10/side","Wrist circles 30s each direction","Neck CARs 5 slow reps each direction","Diaphragmatic breathing 5 min"]
+},
+{
+day: "Friday", label: "FULL BODY — Performance Test Day",
+warmup: ["10 min full body dynamic prep","Foam roll 5 min"],
+exercises: [
+{name:"Power Clean — Peak Load",sets:"5",reps:"2",rest:"2.5 min",tempo:"Explosive",note:"Week 12 peak load — log it"},
+{name:"Trap Bar Deadlift (heavy)",sets:"3",reps:"3",rest:"3 min",tempo:"2-0-1-0",note:""},
+{name:"Weighted Dip",sets:"3",reps:"6",rest:"2 min",tempo:"3-0-1-0",note:""},
+{name:"Weighted Pull-Up",sets:"3",reps:"6",rest:"2 min",tempo:"3-0-1-0",note:""},
+{name:"Farmer's Carry (heavy)",sets:"3",reps:"50m",rest:"90s",tempo:"Walk",note:""},
+],
+finisher:"BENCHMARK WOD 'GRACE': 30 clean-and-jerks for time @ ~95 lbs. Log your time. This is your 12-week performance marker.",
+cooldown:["Full foam roll + 20 min mobility: full body, focus on anything tight","This is your final session — note everything that has improved over 12 weeks"]
+}
+]
+}
+]
+};
+
+let currentPhase = 0;
+let currentDay = 0;
+
+const phaseColors = ["#4A90A4","#C8A96E","#C0392B"];
+
+function setPhase(p) {
+currentPhase = p;
+currentDay = 0;
+for (let i = 0; i < 3; i++) {
+const btn = document.getElementById('ptab-' + i);
+const banner = document.getElementById('pbanner-' + i);
+if (i === p) {
+btn.style.background = phaseColors[i] + '22';
+btn.style.borderColor = phaseColors[i];
+btn.style.color = phaseColors[i];
+banner.classList.add('active');
+} else {
+btn.style.background = 'var(--card)';
+btn.style.borderColor = 'var(--border)';
+btn.style.color = 'var(--muted)';
+banner.classList.remove('active');
+}
+}
+renderDayTabs();
+renderWorkout();
+}
+
+function setDay(d) {
+currentDay = d;
+renderDayTabs();
+renderWorkout();
+}
+
+function renderDayTabs() {
+const days = data.phases[currentPhase].days;
+const container = document.getElementById('day-tabs');
+container.innerHTML = days.map((d, i) => `
+<button class="day-btn" onclick="setDay(${i})" style="${i === currentDay ? `background:${phaseColors[currentPhase]}22;border-color:${phaseColors[currentPhase]};color:${phaseColors[currentPhase]};` : ''}">
+${d.day.toUpperCase()}
+</button>
+`).join('');
+}
+
+function renderWorkout() {
+const d = data.phases[currentPhase].days[currentDay];
+const ph = ['FOUNDATION','BUILDING','PEAK'][currentPhase];
+const c = phaseColors[currentPhase];
+
+const warmupHtml = d.warmup.map(w => `<span class="warmup-tag">${w}</span>`).join('');
+const cooldownHtml = d.cooldown.map(cd => `<span class="cooldown-tag">${cd}</span>`).join('');
+
+const exerciseRows = d.exercises.map((ex, i) => {
+const isHeader = ex.sets === '' && ex.reps === '';
+if (isHeader) {
+return `<tr style="background:#C8A96E08;">
+<td colspan="6" style="padding:10px 8px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C8A96E;letter-spacing:1px;">${ex.name}</td>
+</tr>`;
+}
+return `<tr>
+<td class="ex-name${ex.name.startsWith('→') ? ' sub' : ''}">${ex.name}</td>
+<td class="ex-sets">${ex.sets}</td>
+<td class="ex-reps">${ex.reps}</td>
+<td class="ex-rest">${ex.rest}</td>
+<td class="ex-tempo">${ex.tempo}</td>
+<td class="ex-note">${ex.note}</td>
+</tr>`;
+}).join('');
+
+document.getElementById('workout-cards').innerHTML = `
+<div class="workout-card active">
+<div class="day-header">
+<div class="day-header-eye">${d.day.toUpperCase()} · ${ph}</div>
+<h2>${d.label}</h2>
+</div>
+
+<div class="warmup-section">
+<div class="section-label" style="color:#4A90A4;">Warm-Up Protocol</div>
+<div class="warmup-tags">${warmupHtml}</div>
+</div>
+
+<div class="exercises-section">
+<div class="section-label" style="color:${c};">Exercises</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th>EXERCISE</th><th>SETS</th><th>REPS</th><th>REST</th><th>TEMPO</th><th>COACHING NOTE</th>
+</tr></thead>
+<tbody>${exerciseRows}</tbody>
+</table>
+</div>
+</div>
+
+<div class="finisher-section">
+<div class="section-label" style="color:${c};">Finisher</div>
+<p>${d.finisher}</p>
+</div>
+
+<div class="cooldown-section">
+<div class="section-label" style="color:#9B59B6;">Cooldown & Mobility</div>
+<div class="cooldown-tags">${cooldownHtml}</div>
+</div>
+</div>
+`;
+}
+
+function toggleAcc(id) {
+const el = document.getElementById(id);
+el.classList.toggle('open');
+}
+
+setPhase(0);
+</script>
+
+</body>
+</html>
